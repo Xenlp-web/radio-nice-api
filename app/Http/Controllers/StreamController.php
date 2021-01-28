@@ -20,6 +20,7 @@ class StreamController extends Controller
         }
     }
 
+
     public function getStreamUrl(Request $request, $streamId) {
         $user = $request->user('sanctum');
 
@@ -33,6 +34,7 @@ class StreamController extends Controller
         }
     }
 
+
     public function getCurrentTrack($streamId) {
         try {
             $serverId = Stream::findOrFail($streamId)->server_id;
@@ -43,6 +45,7 @@ class StreamController extends Controller
             return response()->json(['message' => $error->getMessage(), 'status' => 'error'], 400);
         }
     }
+
 
     public function save(Request $request) {
         $validator = Validator::make($request->all(), [
@@ -100,6 +103,7 @@ class StreamController extends Controller
         }
     }
 
+
     public function delete(Request $request, $streamId) {
         $user = $request->user('sanctum');
         try {
@@ -112,6 +116,7 @@ class StreamController extends Controller
             return response()->json(['message' => $error->getMessage(), 'status' => 'error'], 400);
         }
     }
+
 
     public function edit(Request $request, $streamId) {
         $validator = Validator::make($request->all(), [

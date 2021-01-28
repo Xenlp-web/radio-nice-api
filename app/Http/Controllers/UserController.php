@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PremiumPurchased;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Image;
+use Illuminate\Support\Facades\Event;
 
 class UserController extends Controller
 {
