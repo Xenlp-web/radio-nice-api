@@ -20,6 +20,30 @@ class StreamController extends Controller
         }
     }
 
+    public function getStreamUrl(Request $request, $streamId) {
+        $user = $request->user('sanctum');
+
+        try {
+            $serverId = Stream::findOrFail($streamId)->server_id;
+            $streamUrl = Radio::getStreamUrl($serverId, $user);
+            if (!$streamUrl) throw new \Exception('Не удалось получить ссылку на стрим');
+            return response()->json(['stream_url' => $streamUrl,'status' => 'success']);
+        } catch (\Exception $error) {
+            return response()->json(['message' => $error->getMessage(), 'status' => 'error'], 400);
+        }
+    }
+
+    public function getCurrentTrack($streamId) {
+        try {
+            $serverId = Stream::findOrFail($streamId)->server_id;
+            $currentTrack = Radio::getCurrentTrack($serverId);
+            if (!$currentTrack) throw new \Exception('Не удалось получить текущий трек');
+            return response()->json(['current_track' => $currentTrack,'status' => 'success']);
+        } catch (\Exception $error) {
+            return response()->json(['message' => $error->getMessage(), 'status' => 'error'], 400);
+        }
+    }
+
     public function save(Request $request) {
         $validator = Validator::make($request->all(), [
             'server_id' => 'required|integer|unique:App\Models\Stream',
@@ -82,30 +106,6 @@ class StreamController extends Controller
             Image::deleteImage($stream->thumbnail);
             $stream->delete();
             return response()->json(['message' => 'Поток успешно удален','status' => 'success']);
-        } catch (\Exception $error) {
-            return response()->json(['message' => $error->getMessage(), 'status' => 'error'], 400);
-        }
-    }
-
-    public function getStreamUrl(Request $request, $streamId) {
-        $user = $request->user('sanctum');
-
-        try {
-            $serverId = Stream::findOrFail($streamId)->server_id;
-            $streamUrl = Radio::getStreamUrl($serverId, $user);
-            if (!$streamUrl) throw new \Exception('Не удалось получить ссылку на стрим');
-            return response()->json(['stream_url' => $streamUrl,'status' => 'success']);
-        } catch (\Exception $error) {
-            return response()->json(['message' => $error->getMessage(), 'status' => 'error'], 400);
-        }
-    }
-
-    public function getCurrentTrack($streamId) {
-        try {
-            $serverId = Stream::findOrFail($streamId)->server_id;
-            $currentTrack = Radio::getCurrentTrack($serverId);
-            if (!$currentTrack) throw new \Exception('Не удалось получить текущий трек');
-            return response()->json(['current_track' => $currentTrack,'status' => 'success']);
         } catch (\Exception $error) {
             return response()->json(['message' => $error->getMessage(), 'status' => 'error'], 400);
         }

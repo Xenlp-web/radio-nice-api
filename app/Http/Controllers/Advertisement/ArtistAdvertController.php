@@ -8,6 +8,17 @@ use App\Models\ArtistAdvert;
 
 class ArtistAdvertController extends AdvertController
 {
+    public function getAll($bannerId = null) {
+        try {
+            $advert = ArtistAdvert::all();
+            if ($bannerId != null) $advert = ArtistAdvert::findOrFail($bannerId);
+            return response()->json(['artist_adverts' => $advert, 'status' => 'success'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage(), 'status' => 'error'], 400);
+        }
+
+    }
+
     public function save(Request $request) {
         $validator = Validator::make($request->all(), [
             'banner' => 'required|image',
@@ -49,17 +60,6 @@ class ArtistAdvertController extends AdvertController
         } catch (\Exception $error) {
             return response()->json(['message' => $error->getMessage(), 'status' => 'error'], 400);
         }
-    }
-
-    public function getAll($bannerId = null) {
-        try {
-            $advert = ArtistAdvert::all();
-            if ($bannerId != null) $advert = ArtistAdvert::findOrFail($bannerId);
-            return response()->json(['artist_adverts' => $advert, 'status' => 'success'], 200);
-        } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage(), 'status' => 'error'], 400);
-        }
-
     }
 
     public function delete($bannerId) {
