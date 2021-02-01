@@ -37,6 +37,8 @@ Route::middleware(['auth:sanctum', 'user.admin'])->delete('/advert/artist/delete
 Route::get('/stream/{streamId?}', 'App\Http\Controllers\StreamController@get');
 Route::get('/stream/url/{streamId}', 'App\Http\Controllers\StreamController@getStreamUrl');
 Route::get('/stream/track/{streamId}', 'App\Http\Controllers\StreamController@getCurrentTrack');
+Route::post('/stream/track/like/{trackId}', 'App\Http\Controllers\StreamController@trackVoteUp');
+Route::post('/stream/track/dislike/{trackId}', 'App\Http\Controllers\StreamController@trackVoteDown');
 Route::middleware(['auth:sanctum', 'user.admin'])->post('/stream/save', 'App\Http\Controllers\StreamController@save');
 Route::middleware(['auth:sanctum', 'user.admin'])->post('stream/edit/{streamId}', 'App\Http\Controllers\StreamController@edit');
 Route::middleware(['auth:sanctum', 'user.admin'])->delete('/stream/delete/{streamId}', 'App\Http\Controllers\StreamController@delete');

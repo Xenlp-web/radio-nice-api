@@ -36,6 +36,14 @@ class RadioService
         return false;
     }
 
+    public function voteUp($trackId) {
+        return Http::post($this->radioUrl . "/api/v2/music/{$trackId}/like/")->json();
+    }
+
+    public function voteDown($trackId) {
+        return Http::post($this->radioUrl . "/api/v2/music/{$trackId}/dislike/")->json();
+    }
+
 
 
     private function getMinOrMaxBitrateChannelIndex($channels, $neededBitrate = 'min') {
