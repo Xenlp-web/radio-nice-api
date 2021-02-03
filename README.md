@@ -183,3 +183,44 @@ ___
   
   
 ___
+
+## Премиум подписки
+  ### Получить все существующие подписки
+  * GET /api/subscription/get
+  
+  **Возвращает:**
+  * subscriptions
+  
+  <br>
+  
+  ### Создать новую подписку
+  * POST /api/subscription/save (**AUTH, ADMIN**)
+  
+  **Аргументы:**
+  * period_in_months - период действия подписки в месяцах
+  * price
+  
+  **Возвращает:**
+  * message
+  
+  <br>
+  
+  ### Редактировать подписку
+  * POST /api/subscription/edit/{subscription_id}
+  
+  **Аргументы (все необязательные):**
+  * period_in_months
+  * price
+  
+  **Возвращает:**
+  * message
+  
+  <br>
+  
+  ### Удалить подписку
+  * DELETE /api/subscription/delete/{subscription_id}
+  
+  **Возвращает:**
+  * message
+  
+___
