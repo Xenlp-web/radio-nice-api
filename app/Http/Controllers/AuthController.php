@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 
 class AuthController extends Controller
 {
@@ -35,6 +36,7 @@ class AuthController extends Controller
             return response()->json(['errors' => $validator->messages()->all(), 'status' => 'error'], 400);
         }
 
+
         try {
             $user = User::create([
                 'email' => $request->input('email'),
@@ -42,6 +44,7 @@ class AuthController extends Controller
                 'surname' => $request->input('surname'),
                 'password' => bcrypt($request->input('password'))
             ]);
+            $user->sendEmailVerificationNotification();
             $token = $user->createToken('access_token')->plainTextToken;
             return response()->json(['user' => $user, 'token' => $token, 'status' => 'success']);
         } catch (\Exception $error) {

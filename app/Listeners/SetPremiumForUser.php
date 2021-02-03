@@ -18,7 +18,7 @@ class SetPremiumForUser
     }
 
     /**
-     * Handle the event.
+     * Handle the premium purchased event.
      *
      * @param  PremiumPurchased  $event
      * @return void
@@ -27,9 +27,7 @@ class SetPremiumForUser
     {
         $user = $event->user;
         $period = $event->period;
-
         $date = Carbon::now()->addMonths($period);
-
         $user->premium = 1;
         $user->premium_expired = $date;
         $user->save();

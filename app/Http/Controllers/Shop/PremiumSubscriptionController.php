@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
+use App\Models\Shop\SubscriptionOrders;
 use Illuminate\Http\Request;
 use App\Models\Shop\PremiumSubscription;
 use Illuminate\Support\Facades\Validator;
+use Robokassa;
+use Illuminate\Support\Carbon;
+use App\Events\PremiumPurchased;
 
 class PremiumSubscriptionController extends Controller
 {
@@ -96,5 +100,57 @@ class PremiumSubscriptionController extends Controller
      */
     public function get() {
         return response()->json(['subscriptions' => PremiumSubscription::all(), 'status' => 'success']);
+    }
+
+
+    /**
+     * Purchasing premium subscription
+     * @param Request $request
+     * @param int $subscriptionId
+     * @return mixed
+     */
+    public function purchase(Request $request, int $subscriptionId) {
+        $user = $request->user();
+
+        try {
+            $subscription = PremiumSubscription::findOrFail($subscriptionId);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage(), 'status' => 'error'], 400);
+        }
+
+        return response()->json(['redirect_url' => Robokassa::getRedirectUrl($subscription, $user), 'status' => 'success']);
+    }
+
+
+    public function handleSuccessPurchase(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'OutSum' => 'required',
+            'InvId' => 'required',
+            'SignatureValue' => 'required',
+            'Shp_user' => 'required',
+            'Shp_subscription' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->messages()->all(), 'status' => 'error'], 400);
+        }
+
+        try {
+            $subscription = PremiumSubscription::findOrFail($request->get('Shp_subscription'));
+            $user = User::findOrFail($request->get('Shp_user'));
+
+            PremiumPurchased::dispatch($user, $subscription->period_in_months);
+
+            SubscriptionOrders::create([
+                'user_id' => $user->id,
+                'subscription_id' => $subscription->id,
+                'price' => $request->get('OutSum')
+            ]);
+
+            return 'OK' . $request->get('InvId');
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage(), 'status' => 'error'], 400);
+        }
+
     }
 }

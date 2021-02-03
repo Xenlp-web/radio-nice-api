@@ -176,8 +176,8 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         App\Providers\RadioServiceProvider::class,
-        App\Providers\ImageServiceProvider::class
-
+        App\Providers\ImageServiceProvider::class,
+        App\Providers\RobokassaServiceProvider::class
     ],
 
     /*
@@ -230,7 +230,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Radio' => App\Facades\RadioFacade::class,
-        'Image' => App\Facades\ImageFacade::class
+        'Image' => App\Facades\ImageFacade::class,
+        'Robokassa' => App\Facades\RobokassaFacade::class
     ],
 
 ];

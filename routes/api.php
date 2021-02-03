@@ -46,9 +46,16 @@ Route::middleware(['auth:sanctum', 'user.admin'])->delete('/stream/delete/{strea
 
 //Subscriptions
 Route::get('/subscription/get', 'App\Http\Controllers\Shop\PremiumSubscriptionController@get');
+Route::middleware(['auth:sanctum'])->get('/subscription/purchase/{subscriptionId}', 'App\Http\Controllers\Shop\PremiumSubscriptionController@purchase');
+Route::post('/subscription/purchase/success', 'App\Http\Controllers\Shop\PremiumSubscriptionController@handlesSuccessPurchase');
 Route::middleware(['auth:sanctum', 'user.admin'])->post('/subscription/save', 'App\Http\Controllers\Shop\PremiumSubscriptionController@save');
 Route::middleware(['auth:sanctum', 'user.admin'])->post('/subscription/edit/{subscriptionId}', 'App\Http\Controllers\Shop\PremiumSubscriptionController@edit');
 Route::middleware(['auth:sanctum', 'user.admin'])->delete('/subscription/delete/{subscriptionId}', 'App\Http\Controllers\Shop\PremiumSubscriptionController@delete');
+
+
+//Emails
+Route::get('email/verify/{id}', 'App\Http\Controllers\VerificationController@verify')->name('verification.verify');
+Route::get('email/resend', 'App\Http\Controllers\VerificationController@resend')->name('verification.resend');
 
 
 //Errors
