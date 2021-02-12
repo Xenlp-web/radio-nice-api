@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', 'App\Http\Controllers\AuthController@register');
 Route::post('/login', 'App\Http\Controllers\AuthController@login');
 Route::middleware('auth:sanctum')->post('/logout', 'App\Http\Controllers\AuthController@logout');
+Route::post('/password/forgot', 'App\Http\Controllers\AuthController@forgotPassword');
+Route::get('/password/reset', 'App\Http\Controllers\AuthController@passwordReset')->name('password.reset');
 
 
 //User
@@ -28,9 +30,9 @@ Route::middleware('auth:sanctum')->post('/user/current/edit', 'App\Http\Controll
 
 
 //Advertisement
-Route::get('/advert/artist/{bannerId?}', 'App\Http\Controllers\Advertisement\ArtistAdvertController@getAll');
-Route::middleware(['auth:sanctum', 'user.admin'])->post('/advert/artist/save', 'App\Http\Controllers\Advertisement\ArtistAdvertController@save');
-Route::middleware(['auth:sanctum', 'user.admin'])->delete('/advert/artist/delete/{bannerId}', 'App\Http\Controllers\Advertisement\ArtistAdvertController@delete');
+Route::get('/banner/artist/{bannerId?}', 'App\Http\Controllers\Advertisement\ArtistAdvertController@getAll');
+Route::middleware(['auth:sanctum', 'user.admin'])->post('/banner/artist/save', 'App\Http\Controllers\Advertisement\ArtistAdvertController@save');
+Route::middleware(['auth:sanctum', 'user.admin'])->delete('/banner/artist/delete/{bannerId}', 'App\Http\Controllers\Advertisement\ArtistAdvertController@delete');
 
 
 //Stream

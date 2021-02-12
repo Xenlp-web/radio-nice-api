@@ -54,8 +54,8 @@ class StreamController extends Controller
             'title' => 'required',
             'genre' => 'required|string',
             'description' => 'nullable',
-            'main_image' => 'image',
-            'thumbnail' => 'image'
+            'main_image' => 'image|required',
+            'thumbnail' => 'image|required'
         ],
         [
             'server_id.required' => 'Не указан id сервера',
@@ -84,9 +84,8 @@ class StreamController extends Controller
         try {
             if (!Radio::checkServerAvailability($serverId)) throw new \Exception('Сервер не доступен');
 
-//
-//            $mainImageUrl = Image::saveImage($mainImage, 'streams/main');
-//            $thumbnailUrl = Image::saveImage($thumbnail, 'streams/thumbnail');
+            $mainImageUrl = Image::saveImage($mainImage, 'streams/main');
+            $thumbnailUrl = Image::saveImage($thumbnail, 'streams/thumbnail');
 
             Stream::create([
                 'server_id' => $serverId,
@@ -94,8 +93,8 @@ class StreamController extends Controller
                 'title' => $title,
                 'genre' => $genre,
                 'description' => $description,
-                'main_image' => 'example',
-                'thumbnail' => 'example'
+                'main_image' => $mainImageUrl,
+                'thumbnail' => $thumbnailUrl
             ]);
 
             return response()->json(['message' => 'Трансляция успешно создана','status' => 'success']);
