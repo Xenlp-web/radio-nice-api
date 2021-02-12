@@ -142,6 +142,14 @@ ___
   
   <br/>
   
+  ### Получить последние 10 треков для трансляции
+  * GET /api/stream/history/{stream_id}
+  
+  **Возвращает:**
+  * tracks
+  
+  <br/>
+  
   ### Создать новую трансляцию
   * POST /api/stream/save (**AUTH, ADMIN**). 
   
