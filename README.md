@@ -75,7 +75,7 @@ ___
 
 ## Реклама
   ### Получить рекламные баннеры музыкантов
-  * GET /api/advert/artist/{banner_id?}. 
+  * GET /api/banner/artist/{banner_id?}. 
   
   **Возвращает:**
   * artist_adverts - объект с данными баннера(-ов)
@@ -83,7 +83,7 @@ ___
   <br/>
   
   ### Создать новый баннер музыканта
-  * POST /api/advert/artist/save (**AUTH, ADMIN**). 
+  * POST /api/banner/artist/save (**AUTH, ADMIN**). 
   
   **Аргументы:**
   * banner - изображение
@@ -98,7 +98,7 @@ ___
   <br/>
   
   ### Удалить баннер музыканта
-  * DELETE /api/advert/artist/delete/{banner_id} (**AUTH, ADMIN**). 
+  * DELETE /api/banner/artist/delete/{banner_id} (**AUTH, ADMIN**). 
   
   **Возвращает:**
   * message
@@ -223,4 +223,11 @@ ___
   **Возвращает:**
   * message
   
+  <br>
+  
+  ### Купить подписку
+  * GET /api/subscription/purchase/{subscription_id} (**AUTH**)
+  
+  **Возвращает:**
+  * redirect_url - урл, на который нужно отправить пользователя для оплаты
 ___
