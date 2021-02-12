@@ -179,4 +179,16 @@ class StreamController extends Controller
     public function trackVoteDown($trackId) {
         return Radio::voteDown($trackId);
     }
+
+    public function getLastTracks($streamId) {
+        $limit = 10;
+        try {
+            $serverId = Stream::findOrFail($streamId)->server_id;
+            $lastTracks = Radio::getLastTracks($serverId, $limit);
+            if (!$lastTracks) throw new \Exception('Не удалось получить историю эфира');
+            return response()->json(['tracks' => $lastTracks,'status' => 'success']);
+        } catch (\Exception $error) {
+            return response()->json(['message' => $error->getMessage(), 'status' => 'error'], 400);
+        }
+    }
 }

@@ -36,6 +36,13 @@ class RadioService
         return false;
     }
 
+    public function getLastTracks($serverId, $limit) {
+        if ($this->checkServerAvailability($serverId)) {
+            return Http::get($this->radioUrl . '/api/v2/history/?server=' . $serverId . '&limit=' . $limit)->json()['results'];
+        }
+        return false;
+    }
+
     public function voteUp($trackId) {
         return Http::post($this->radioUrl . "/api/v2/music/{$trackId}/like/")->json();
     }
