@@ -2,8 +2,10 @@
 
 namespace App\Console;
 
+use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Models\User;
 
 class Kernel extends ConsoleKernel
 {
@@ -24,7 +26,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->call(function() {
+            $now = Carbon::now();
+            User::where('premium', 1)->where('premium_expired', '<', $now)->where('premium_expired', '!=', NULL)->update([
+                'premium' => 0,
+                'premium_expired' => NULL
+            ]);
+        })->daily();
     }
 
     /**
