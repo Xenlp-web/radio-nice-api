@@ -7,7 +7,7 @@ use Image;
 
 class AdvertController extends Controller
 {
-    protected $mainFolder = 'adverts';
+    protected $mainFolder = 'banners';
 
     protected function saveBanner($image, $subFolder) {
         $folder = $this->mainFolder . "/" . $subFolder;

@@ -48,7 +48,7 @@ class ArtistAdvertController extends AdvertController
         if ($request->has('description')) $description = $request->get('description');
 
         try {
-            $bannerPath = $this->saveBanner($banner, 'artists_adverts');
+            $bannerPath = $this->saveBanner($banner, 'artists_banners');
             ArtistAdvert::create([
                 'banner' => $bannerPath,
                 'artist' => $artist,
