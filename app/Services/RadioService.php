@@ -23,7 +23,7 @@ class RadioService
 
             $channelIndex = $this->getMinOrMaxBitrateChannelIndex($channels, $neededBitrate);
 
-            if ($channelIndex !== false) return $channels[$channelIndex]['stream_url'];
+            if ($channelIndex !== false) return $channels[$channelIndex]['secure_stream_url'];
         }
 
         return false;

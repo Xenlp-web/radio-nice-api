@@ -23,6 +23,11 @@ Route::post('/password/forgot', 'App\Http\Controllers\AuthController@forgotPassw
 Route::get('/password/reset', 'App\Http\Controllers\AuthController@passwordReset')->name('password.reset');
 
 
+//Auth Social
+Route::get('/auth/vk', 'App\Http\Controllers\AuthSocial\VKController@init');
+Route::get('/auth/vk/callback', 'App\Http\Controllers\AuthSocial\VKController@callback');
+
+
 //User
 Route::middleware('auth:sanctum')->get('/user/current', 'App\Http\Controllers\UserController@getCurrent');
 Route::middleware(['auth:sanctum', 'user.admin'])->get('/user/{userId?}', 'App\Http\Controllers\UserController@get');

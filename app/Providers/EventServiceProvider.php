@@ -23,7 +23,11 @@ class EventServiceProvider extends ServiceProvider
 
         PremiumPurchased::class => [
             SetPremiumForUser::class
-        ]
+        ],
+
+        \SocialiteProviders\Manager\SocialiteWasCalled::class => [
+            'SocialiteProviders\\VKontakte\\VKontakteExtendSocialite@handle',
+        ],
     ];
 
     /**

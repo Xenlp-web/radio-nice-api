@@ -177,7 +177,8 @@ return [
 
         App\Providers\RadioServiceProvider::class,
         App\Providers\ImageServiceProvider::class,
-        App\Providers\RobokassaServiceProvider::class
+        App\Providers\RobokassaServiceProvider::class,
+        \SocialiteProviders\Manager\ServiceProvider::class,
     ],
 
     /*
