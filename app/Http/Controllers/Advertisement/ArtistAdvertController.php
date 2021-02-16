@@ -73,4 +73,38 @@ class ArtistAdvertController extends AdvertController
             return response()->json(['message' => $error->getMessage(), 'status' => 'error'], 400);
         }
     }
+
+    public function edit(Request $request, $bannerId) {
+        $validator = Validator::make($request->all(), [
+            'banner' => 'image'
+        ],
+        [
+            'banner.image' => 'Баннер не является изображением'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->messages()->all(), 'status' => 'error'], 400);
+        }
+
+        try {
+            $advert = ArtistAdvert::findOrFail($bannerId);
+            $bannerName = $advert->banner;
+
+            if ($request->has('banner')) {
+                $this->deleteBanner($bannerName);
+                $newBanner = $request->file('banner');
+                $newBannerPath = $this->saveBanner($newBanner, 'artists_banners');
+                $advert->banner = $newBannerPath;
+                $advert->save();
+            }
+
+            $advert->update($request->only('artist', 'genre', 'description', 'url'));
+            $advert->save();
+
+            $advert->delete();
+            return response()->json(['message' => 'Баннер успешно отредактирован','status' => 'success'], 200);
+        } catch (\Exception $error) {
+            return response()->json(['message' => $error->getMessage(), 'status' => 'error'], 400);
+        }
+    }
 }

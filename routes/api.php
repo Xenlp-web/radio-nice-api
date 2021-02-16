@@ -38,6 +38,7 @@ Route::middleware('auth:sanctum')->post('/user/current/edit', 'App\Http\Controll
 Route::get('/banner/artist/{bannerId?}', 'App\Http\Controllers\Advertisement\ArtistAdvertController@getAll');
 Route::middleware(['auth:sanctum', 'user.admin'])->post('/banner/artist/save', 'App\Http\Controllers\Advertisement\ArtistAdvertController@save');
 Route::middleware(['auth:sanctum', 'user.admin'])->delete('/banner/artist/delete/{bannerId}', 'App\Http\Controllers\Advertisement\ArtistAdvertController@delete');
+Route::middleware(['auth:sanctum', 'user.admin'])->post('/banner/artist/edit/{bannerId}', 'App\Http\Controllers\Advertisement\ArtistAdvertController@edit');
 
 
 //Stream
