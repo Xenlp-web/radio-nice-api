@@ -115,6 +115,21 @@ ___
   **Возвращает:**
   * message
   
+  <br/>
+  
+  ### Редактировать баннер
+  * POST /api/banner/artist/edit/{banner_id}
+  
+  **Аргументы (все необязательные):**
+  * banner - картинка
+  * artist
+  * genre
+  * description
+  * url
+  
+  **Возвращает:**
+  * message
+  
 ___
 
 ## Трансляции
