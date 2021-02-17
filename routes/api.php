@@ -46,6 +46,7 @@ Route::get('/stream/{streamId?}', 'App\Http\Controllers\StreamController@get');
 Route::get('/stream/url/{streamId}', 'App\Http\Controllers\StreamController@getStreamUrl');
 Route::get('/stream/track/{streamId}', 'App\Http\Controllers\StreamController@getCurrentTrack');
 Route::get('/stream/history/{streamId}', 'App\Http\Controllers\StreamController@getLastTracks');
+Route::get('/listeners/geo', 'App\Http\Controllers\StreamController@getListenersGeo');
 Route::post('/stream/track/like/{trackId}', 'App\Http\Controllers\StreamController@trackVoteUp');
 Route::post('/stream/track/dislike/{trackId}', 'App\Http\Controllers\StreamController@trackVoteDown');
 Route::middleware(['auth:sanctum', 'user.admin'])->post('/stream/save', 'App\Http\Controllers\StreamController@save');

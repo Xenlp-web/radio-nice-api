@@ -191,4 +191,8 @@ class StreamController extends Controller
             return response()->json(['message' => $error->getMessage(), 'status' => 'error'], 400);
         }
     }
+
+    public function getListenersGeo() {
+        return response()->json(['listeners' => Radio::getListenersGeo(), 'status' => 'success']);
+    }
 }

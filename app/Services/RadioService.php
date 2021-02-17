@@ -51,6 +51,10 @@ class RadioService
         return Http::post($this->radioUrl . "/api/v2/music/{$trackId}/dislike/")->json();
     }
 
+    public function getListenersGeo() {
+        return Http::get($this->radioUrl .'/api/v2/listeners_geoip')->json();
+    }
+
 
 
     private function getMinOrMaxBitrateChannelIndex($channels, $neededBitrate = 'min') {
