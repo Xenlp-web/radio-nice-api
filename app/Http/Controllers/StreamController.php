@@ -120,7 +120,7 @@ class StreamController extends Controller
 
     public function edit(Request $request, $streamId) {
         $validator = Validator::make($request->all(), [
-            'server_id' => 'integer|unique:App\Models\Stream',
+            'server_id' => 'integer',
             'video_stream_link' => 'string|nullable',
             'title' => '',
             'genre' => 'string',

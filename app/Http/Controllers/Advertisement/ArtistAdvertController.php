@@ -87,7 +87,7 @@ class ArtistAdvertController extends AdvertController
         }
 
         try {
-            $advert = ArtistAdvert::findOrFail($bannerId);
+            $advert = ArtistAdvert::findOrFail($bannerId)->first();
             $bannerName = $advert->banner;
 
             if ($request->has('banner')) {
@@ -100,8 +100,6 @@ class ArtistAdvertController extends AdvertController
 
             $advert->update($request->only('artist', 'genre', 'description', 'url'));
             $advert->save();
-
-            $advert->delete();
             return response()->json(['message' => 'Баннер успешно отредактирован','status' => 'success'], 200);
         } catch (\Exception $error) {
             return response()->json(['message' => $error->getMessage(), 'status' => 'error'], 400);
