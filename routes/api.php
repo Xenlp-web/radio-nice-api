@@ -64,8 +64,9 @@ Route::middleware(['auth:sanctum', 'user.admin'])->delete('/subscription/delete/
 
 
 //Emails
-Route::get('email/verify/{id}', 'App\Http\Controllers\VerificationController@verify')->name('verification.verify');
-Route::get('email/resend', 'App\Http\Controllers\VerificationController@resend')->name('verification.resend');
+Route::get('/email/verify/{id}', 'App\Http\Controllers\VerificationController@verify')->name('verification.verify');
+Route::get('/email/resend', 'App\Http\Controllers\VerificationController@resend')->name('verification.resend');
+Route::post('/email/feedback', 'App\Http\Controllers\MailController@sendFeedback');
 
 
 //Errors
