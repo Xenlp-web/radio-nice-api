@@ -44,13 +44,13 @@ Route::middleware(['auth:sanctum', 'user.admin'])->post('/banner/artist/edit/{ba
 //Stream
 Route::get('/stream/{streamId?}', 'App\Http\Controllers\StreamController@get');
 Route::get('/stream/url/{streamId}', 'App\Http\Controllers\StreamController@getStreamUrl');
-Route::get('/stream/track/{streamId}', 'App\Http\Controllers\StreamController@getCurrentTrack');
-Route::get('/stream/history/{streamId}', 'App\Http\Controllers\StreamController@getLastTracks');
+Route::middleware(['auth:sanctum', 'premium'])->get('/stream/track/{streamId}', 'App\Http\Controllers\StreamController@getCurrentTrack');
+Route::middleware(['auth:sanctum', 'premium'])->get('/stream/history/{streamId}', 'App\Http\Controllers\StreamController@getLastTracks');
 Route::get('/listeners/geo', 'App\Http\Controllers\StreamController@getListenersGeo');
-Route::post('/stream/track/like/{trackId}', 'App\Http\Controllers\StreamController@trackVoteUp');
-Route::post('/stream/track/dislike/{trackId}', 'App\Http\Controllers\StreamController@trackVoteDown');
+Route::middleware(['auth:sanctum', 'premium'])->post('/stream/track/like/{trackId}', 'App\Http\Controllers\StreamController@trackVoteUp');
+Route::middleware(['auth:sanctum', 'premium'])->post('/stream/track/dislike/{trackId}', 'App\Http\Controllers\StreamController@trackVoteDown');
 Route::middleware(['auth:sanctum', 'user.admin'])->post('/stream/save', 'App\Http\Controllers\StreamController@save');
-Route::middleware(['auth:sanctum', 'user.admin'])->post('stream/edit/{streamId}', 'App\Http\Controllers\StreamController@edit');
+Route::middleware(['auth:sanctum', 'user.admin'])->post('/stream/edit/{streamId}', 'App\Http\Controllers\StreamController@edit');
 Route::middleware(['auth:sanctum', 'user.admin'])->delete('/stream/delete/{streamId}', 'App\Http\Controllers\StreamController@delete');
 
 

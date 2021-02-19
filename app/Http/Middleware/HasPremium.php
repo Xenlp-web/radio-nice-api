@@ -5,10 +5,10 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class CheckUserAdminRole
+class HasPremium
 {
     /**
-     * Handle an incoming request.
+     * Check for premium status
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
@@ -17,8 +17,8 @@ class CheckUserAdminRole
     public function handle(Request $request, Closure $next)
     {
         $user = $request->user('sanctum');
-        if ($user->role != 'admin') return response()->json([
-            'message' => 'У вас нет прав администратора',
+        if ($user->premium != 1) return response()->json([
+            'message' => 'Премиум не активирован',
             'status' => 'error'
         ], 403);
         return $next($request);
