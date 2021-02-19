@@ -150,7 +150,7 @@ ___
   <br/>
   
   ### Получить текущий трек для трансляции
-  * GET /api/stream/track/{stream_id}
+  * GET /api/stream/track/{stream_id} (**AUTH**)
   
   **Возвращает:**
   * current_track - объект с информацией о текущем треке
@@ -158,7 +158,7 @@ ___
   <br/>
   
   ### Получить последние 10 треков для трансляции
-  * GET /api/stream/history/{stream_id}
+  * GET /api/stream/history/{stream_id} (**AUTH**)
   
   **Возвращает:**
   * tracks
@@ -208,7 +208,7 @@ ___
   <br>
   
   ### Поставить лайк/дизлайк
-  * POST /api/stream/track/(dis)like/{track_id}
+  * POST /api/stream/track/(dis)like/{track_id} (**AUTH**)
   * track_id - поле all_music_id из запроса текущего трека
   
   **Возвращает:**
@@ -276,3 +276,16 @@ ___
 
 ___
     
+## Почта
+   ### Форма обратной связи
+   * POST /api/email/feedback
+
+   **Аргументы:**
+   * email
+   * name
+   * message
+
+   **Возваращает:**
+   * message
+
+___
