@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Models\User;
+use App\Models\TimeTracker;
 
 class Kernel extends ConsoleKernel
 {
@@ -32,6 +33,10 @@ class Kernel extends ConsoleKernel
                 'premium' => 0,
                 'premium_expired' => NULL
             ]);
+        })->daily();
+
+        $schedule->call(function() {
+            TimeTracker::truncate();
         })->daily();
     }
 

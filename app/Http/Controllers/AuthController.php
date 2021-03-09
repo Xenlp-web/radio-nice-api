@@ -49,7 +49,7 @@ class AuthController extends Controller
             $token = $user->createToken('access_token')->plainTextToken;
             return response()->json(['user' => $user, 'token' => $token, 'status' => 'success']);
         } catch (\Exception $error) {
-            return response()->json(['message' => $error->getMessage(), 'status' => 'error'], 400);
+            return response()->json(['errors' => $error->getMessage(), 'status' => 'error'], 400);
         }
     }
 
@@ -74,7 +74,7 @@ class AuthController extends Controller
             $token = $user->createToken('access_token')->plainTextToken;
             return response()->json(['user' => $user, 'token' => $token, 'status' => 'success']);
         } catch (\Exception $error) {
-            return response()->json(['message' => $error->getMessage(), 'status' => 'error'], 400);
+            return response()->json(['errors' => $error->getMessage(), 'status' => 'error'], 400);
         }
     }
 
@@ -101,7 +101,7 @@ class AuthController extends Controller
             $user->tmp_password = bcrypt($password);
             $user->save();
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage(), 'status' => 'error'], 400);
+            return response()->json(['errors' => $e->getMessage(), 'status' => 'error'], 400);
         }
 
         $response = Password::sendResetLink($email);

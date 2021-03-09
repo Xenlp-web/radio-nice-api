@@ -64,7 +64,7 @@ class ArtistAdvertController extends AdvertController
 
     public function delete($bannerId) {
         try {
-            $advert = ArtistAdvert::findOrFail($bannerId)->first();
+            $advert = ArtistAdvert::findOrFail($bannerId);
             $bannerName = $advert->banner;
             $this->deleteBanner($bannerName);
             $advert->delete();
@@ -76,10 +76,18 @@ class ArtistAdvertController extends AdvertController
 
     public function edit(Request $request, $bannerId) {
         $validator = Validator::make($request->all(), [
-            'banner' => 'image'
+            'banner' => 'image',
+            'artist' => 'min:1',
+            'genre' => 'min:1',
+            'description' => 'min:1',
+            'url' => 'min:1'
         ],
         [
-            'banner.image' => 'Баннер не является изображением'
+            'banner.image' => 'Баннер не является изображением',
+            'artist.min' => 'Не указан исполнитель',
+            'genre.min' => 'Не указан жанр',
+            'description.min' => 'Не указано описание',
+            'url.min' => 'Не указана ссылка'
         ]);
 
         if ($validator->fails()) {
@@ -87,7 +95,7 @@ class ArtistAdvertController extends AdvertController
         }
 
         try {
-            $advert = ArtistAdvert::findOrFail($bannerId)->first();
+            $advert = ArtistAdvert::findOrFail($bannerId);
             $bannerName = $advert->banner;
 
             if ($request->has('banner')) {

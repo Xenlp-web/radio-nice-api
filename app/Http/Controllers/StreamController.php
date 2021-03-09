@@ -7,6 +7,7 @@ use App\Models\Stream;
 use Illuminate\Support\Facades\Validator;
 use Radio;
 use Image;
+use Illuminate\Support\Facades\Auth;
 
 class StreamController extends Controller
 {
@@ -30,7 +31,7 @@ class StreamController extends Controller
             if (!$streamUrl) throw new \Exception('Не удалось получить ссылку на стрим');
             return response()->json(['stream_url' => $streamUrl,'status' => 'success']);
         } catch (\Exception $error) {
-            return response()->json(['message' => $error->getMessage(), 'status' => 'error'], 400);
+            return response()->json(['errors' => $error->getMessage(), 'status' => 'error'], 400);
         }
     }
 
@@ -42,7 +43,7 @@ class StreamController extends Controller
             if (!$currentTrack) throw new \Exception('Не удалось получить текущий трек');
             return response()->json(['current_track' => $currentTrack,'status' => 'success']);
         } catch (\Exception $error) {
-            return response()->json(['message' => $error->getMessage(), 'status' => 'error'], 400);
+            return response()->json(['errors' => $error->getMessage(), 'status' => 'error'], 400);
         }
     }
 
@@ -99,7 +100,7 @@ class StreamController extends Controller
 
             return response()->json(['message' => 'Трансляция успешно создана','status' => 'success']);
         } catch (\Exception $error) {
-            return response()->json(['message' => $error->getMessage(), 'status' => 'error'], 400);
+            return response()->json(['errors' => $error->getMessage(), 'status' => 'error'], 400);
         }
     }
 
@@ -113,7 +114,7 @@ class StreamController extends Controller
             $stream->delete();
             return response()->json(['message' => 'Трансляция успешно удален','status' => 'success']);
         } catch (\Exception $error) {
-            return response()->json(['message' => $error->getMessage(), 'status' => 'error'], 400);
+            return response()->json(['errors' => $error->getMessage(), 'status' => 'error'], 400);
         }
     }
 
@@ -168,7 +169,7 @@ class StreamController extends Controller
 
             return response()->json(['message' => 'Трансляция отредактирована','status' => 'success']);
         } catch (\Exception $error) {
-            return response()->json(['message' => $error->getMessage(), 'status' => 'error'], 400);
+            return response()->json(['errors' => $error->getMessage(), 'status' => 'error'], 400);
         }
     }
 
@@ -180,15 +181,17 @@ class StreamController extends Controller
         return Radio::voteDown($trackId);
     }
 
-    public function getLastTracks($streamId) {
+    public function getLastTracks(Request $request, $streamId) {
         $limit = 10;
+        $user = $request->user('sanctum');
         try {
             $stream = Stream::findOrFail($streamId);
             $serverId = $stream->server_id;
-            $lastTracks = Radio::getLastTracks($serverId, $limit);
+            $lastTracks = [];
+            if ($user && $user->premium == 1) $lastTracks = Radio::getLastTracks($serverId, $limit);
             return response()->json(['stream_info' => $stream, 'tracks' => $lastTracks, 'status' => 'success']);
         } catch (\Exception $error) {
-            return response()->json(['message' => $error->getMessage(), 'status' => 'error'], 400);
+            return response()->json(['errors' => $error->getMessage(), 'status' => 'error'], 400);
         }
     }
 

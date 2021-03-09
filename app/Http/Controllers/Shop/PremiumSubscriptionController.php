@@ -9,6 +9,7 @@ use App\Models\Shop\PremiumSubscription;
 use Illuminate\Support\Facades\Validator;
 use Robokassa;
 use App\Events\PremiumPurchased;
+use App\Models\User;
 
 class PremiumSubscriptionController extends Controller
 {

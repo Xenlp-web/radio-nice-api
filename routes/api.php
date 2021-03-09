@@ -45,7 +45,7 @@ Route::middleware(['auth:sanctum', 'user.admin'])->post('/banner/artist/edit/{ba
 Route::get('/stream/{streamId?}', 'App\Http\Controllers\StreamController@get');
 Route::get('/stream/url/{streamId}', 'App\Http\Controllers\StreamController@getStreamUrl');
 Route::middleware(['auth:sanctum', 'premium'])->get('/stream/track/{streamId}', 'App\Http\Controllers\StreamController@getCurrentTrack');
-Route::middleware(['auth:sanctum', 'premium'])->get('/stream/history/{streamId}', 'App\Http\Controllers\StreamController@getLastTracks');
+Route::get('/stream/history/{streamId}', 'App\Http\Controllers\StreamController@getLastTracks');
 Route::get('/listeners/geo', 'App\Http\Controllers\StreamController@getListenersGeo');
 Route::middleware(['auth:sanctum', 'premium'])->post('/stream/track/like/{trackId}', 'App\Http\Controllers\StreamController@trackVoteUp');
 Route::middleware(['auth:sanctum', 'premium'])->post('/stream/track/dislike/{trackId}', 'App\Http\Controllers\StreamController@trackVoteDown');
@@ -57,7 +57,7 @@ Route::middleware(['auth:sanctum', 'user.admin'])->delete('/stream/delete/{strea
 //Subscriptions
 Route::get('/subscription/get', 'App\Http\Controllers\Shop\PremiumSubscriptionController@get');
 Route::middleware(['auth:sanctum'])->get('/subscription/purchase/{subscriptionId}', 'App\Http\Controllers\Shop\PremiumSubscriptionController@purchase');
-Route::post('/subscription/purchase/success', 'App\Http\Controllers\Shop\PremiumSubscriptionController@handlesSuccessPurchase');
+Route::post('/subscription/purchase/success', 'App\Http\Controllers\Shop\PremiumSubscriptionController@handleSuccessPurchase');
 Route::middleware(['auth:sanctum', 'user.admin'])->post('/subscription/save', 'App\Http\Controllers\Shop\PremiumSubscriptionController@save');
 Route::middleware(['auth:sanctum', 'user.admin'])->post('/subscription/edit/{subscriptionId}', 'App\Http\Controllers\Shop\PremiumSubscriptionController@edit');
 Route::middleware(['auth:sanctum', 'user.admin'])->delete('/subscription/delete/{subscriptionId}', 'App\Http\Controllers\Shop\PremiumSubscriptionController@delete');
@@ -67,6 +67,11 @@ Route::middleware(['auth:sanctum', 'user.admin'])->delete('/subscription/delete/
 Route::get('/email/verify/{id}', 'App\Http\Controllers\VerificationController@verify')->name('verification.verify');
 Route::get('/email/resend', 'App\Http\Controllers\VerificationController@resend')->name('verification.resend');
 Route::post('/email/feedback', 'App\Http\Controllers\MailController@sendFeedback');
+Route::post('/email/offer/track', 'App\Http\Controllers\MailController@offerTrack');
+
+
+//Time Tracker
+Route::post('/time-tracker/update', 'App\Http\Controllers\TimeTrackController@update');
 
 
 //Errors
