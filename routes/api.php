@@ -24,8 +24,12 @@ Route::get('/password/reset', 'App\Http\Controllers\AuthController@passwordReset
 
 
 //Auth Social
-Route::get('/auth/vk', 'App\Http\Controllers\AuthSocial\VKController@init');
-Route::get('/auth/vk/callback', 'App\Http\Controllers\AuthSocial\VKController@callback');
+Route::middleware('web')->group(function() {
+    Route::get('/auth/social/{driver}', 'App\Http\Controllers\AuthSocial@init');
+    Route::get('/auth/social/{driver}/token', 'App\Http\Controllers\AuthSocial@getToken');
+    Route::post('/auth/social/{driver}/execute', 'App\Http\Controllers\AuthSocial@execute');
+    Route::middleware('auth:sanctum')->post('/auth/social/{driver}/link-account', 'App\Http\Controllers\AuthSocial@linkAccount');
+});
 
 
 //User
