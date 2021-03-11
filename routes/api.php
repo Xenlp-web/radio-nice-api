@@ -34,6 +34,7 @@ Route::middleware('web')->group(function() {
 
 //User
 Route::middleware('auth:sanctum')->get('/user/current', 'App\Http\Controllers\UserController@getCurrent');
+Route::middleware('auth:sanctum')->get('/user/current/socials', 'App\Http\Controllers\UserController@getSocials');
 Route::middleware(['auth:sanctum', 'user.admin'])->get('/user/{userId?}', 'App\Http\Controllers\UserController@get');
 Route::middleware('auth:sanctum')->post('/user/current/edit', 'App\Http\Controllers\UserController@edit');
 

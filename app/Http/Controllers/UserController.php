@@ -68,4 +68,13 @@ class UserController extends Controller
             return response()->json(['message' => $e->getMessage(), 'status' => 'error'], 400);
         }
     }
+
+    public function getSocials(Request $request) {
+        try {
+            $user = $request->user('sanctum');
+            return response()->json(['socials' => $user->only('vkontakte_id', 'facebook_id', 'google_id', 'yandex_id', 'mailru_id'), 'status' => 'success']);
+        } catch (\Exception $e) {
+            return response()->json(['errors' => $e->getMessage(), 'status' => 'error'], 400);
+        }
+    }
 }
